@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Smart Resume Analyzer</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div class="logo">ResumeAI</div>
+      <p>Powered by NLP & Machine Learning</p>
+    </header>
+
+    <main>
+      <div class="hero">
+        <h1>Analyze Your Resume</h1>
+        <p>Upload your resume and paste a job description to get your match score, missing skills, and personalized suggestions.</p>
+      </div>
+
+      <div class="card upload-card">
+        <div class="form-group">
+          <label>Upload Resume</label>
+          <div class="file-drop" id="fileDrop" onclick="document.getElementById('resumeFile').click()">
+            <div class="file-icon">📄</div>
+            <p id="fileLabel">Click to upload PDF or DOCX</p>
+            <span>Max 5MB</span>
+            <input type="file" id="resumeFile" accept=".pdf,.docx" style="display:none" onchange="updateFileLabel(this)" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Job Description</label>
+          <textarea id="jobDesc" rows="7" placeholder="Paste the full job description here..."></textarea>
+        </div>
+
+        <button id="analyzeBtn" onclick="analyze()">
+          <span id="btnText">Analyze Resume</span>
+          <div class="spinner hidden" id="spinner"></div>
+        </button>
+      </div>
+
+      <div id="results" class="hidden">
+        <div class="score-section">
+          <div class="score-ring">
+            <svg viewBox="0 0 120 120">
+              <circle cx="60" cy="60" r="50" fill="none" stroke="#e2e8f0" stroke-width="10"/>
+              <circle cx="60" cy="60" r="50" fill="none" stroke="#6366f1" stroke-width="10"
+                stroke-dasharray="314" stroke-dashoffset="314"
+                id="scoreCircle" stroke-linecap="round"
+                transform="rotate(-90 60 60)"/>
+            </svg>
+            <div class="score-text">
+              <span id="scoreVal">0</span>
+              <small>% Match</small>
+            </div>
+          </div>
+          <div class="score-label" id="scoreLabel">Analyzing...</div>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <h3>Skills Found</h3>
+            <div id="skillsFound" class="tags"></div>
+          </div>
+          <div class="card">
+            <h3>Missing Skills</h3>
+            <div id="missingSkills" class="tags missing"></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Improvement Suggestions</h3>
+          <ul id="suggestions" class="suggestions-list"></ul>
+        </div>
+
+        <div class="card">
+          <h3>Job Recommendations</h3>
+          <div id="jobRecs"></div>
+        </div>
+      </div>
+    </main>
+  </div>
+  <script src="/static/script.js"></script>
+</body>
+</html>
